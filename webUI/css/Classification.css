@@ -1,0 +1,74 @@
+/* 基础样式 */
+body {
+  font-family: 'PingFang SC', Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* 容器样式 */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+  flex: 1;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #444;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar ul li:hover {
+  background-color: #555;
+}
+
+/* 主内容区域样式 */
+.main-content {
+  flex: 3;
+  background-color: #fff;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* 表单样式 */
+form {
+  max-width: 500px;
+  margin: auto;
+}
+
+label, input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+}
+
+input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
