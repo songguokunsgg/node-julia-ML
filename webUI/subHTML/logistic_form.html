@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>逻辑回归</title>
   <style>
@@ -62,27 +63,73 @@
     }
   </style>
 </head>
+
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <div class="main-content">
-    <h2>逻辑回归</h2>
-    <form id="logistic-form">
-      <!-- 此处可以说添加更多的参数 -->
-      <label for="data-file">选择数据文件：</label>
-      <input type="file" id="data-file" name="data-file"><br><br>
-  
-      <label for="first-row-is-header">第一行是否为header？</label>
-      <input type="checkbox" id="first-row-is-header" name="first-row-is-header" checked><br><br>
-  
-      <label for="learning-rate">学习率：</label>
-      <input type="number" id="learning-rate" name="learning-rate"><br><br>
+    <div class="main-content">
+      <h2>逻辑回归</h2>
+      <form id="logistic-form">
+        <!-- 此处可以说添加更多的参数 -->
+        <label for="data-file">选择数据文件：</label>
+        <input type="file" id="data-file" name="data-file"><br><br>
 
-      <button type="button" id="submit-form">运行</button>
-    </form>
+        <label for="first-row-is-header">第一行是否为header？</label>
+        <input type="checkbox" id="first-row-is-header" name="first-row-is-header" checked>
+
+        <label for="lambda">正则化强度lambda：</label>
+        <input type="range" id="lambda" name="lambda" min="0" max="1" step="0.1" value="0">
+        <span id="lambda_value">1</span>
+
+        <label for="gamma">正则化强度gamma：</label>
+        <input type="range" id="gamma" name="gamma" min="0" max="1" step="0.1" value="0">
+        <span id="gamma_value">1</span>
+
+        <label>正则化强度类型：</label>
+        <input type="radio" id="l1" name="penalty" value="l1" checked>
+        <label for="l1">L1</label>
+        
+        <input type="radio" id="l2" name="penalty" value="l2">
+        <label for="l2">L2</label>
+        
+        <input type="radio" id="elasticnet" name="penalty" value="elasticnet" >
+        <label for="elasticnet">ElasticNet</label>
+        
+
+        <label for="fit_intercept">是否拟合截距？</label>
+        <input type="checkbox" id="fit_intercept" name="fit_intercept" checked>
+
+        <label for="penalize_intercept">是否在正则化过程中进行惩罚？</label>
+        <input type="checkbox" id="penalize_intercept" name="penalize_intercept">
+
+        <label for="scale_penalty_with_samples">是否应该将正则化惩罚与样本数量成比例地进行缩放？</label>
+        <input type="checkbox" id="scale_penalty_with_samples" name="scale_penalty_with_samples">
+
+        <button type="button" id="submit-form">运行</button>
+      </form>
+    </div>
   </div>
-</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const lambdaInput = document.getElementById('lambda');
+      const gammaInput = document.getElementById('gamma');
+
+      const lambdaValue = document.getElementById('lambda_value');
+      const gammaValue = document.getElementById('gamma_value');
+
+      lambdaInput.addEventListener('input', () => {
+        lambdaValue.innerText = lambdaInput.value;
+      });
+
+      gammaInput.addEventListener('input', () => {
+        gammaValue.innerText = gammaInput.value;
+      });
+
+    });
+  </script>
 
 </body>
+
 </html>

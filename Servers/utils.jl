@@ -18,7 +18,7 @@ function data_split(df::Union{DataFrame,Matrix}, split_rate=0.7)
     test_pattern = test_data[:, 1:end-1]
     test_target = test_data[:, end]
 
-    return train_pattern, train_target, test_pattern, test_target
+    return train_data, test_data
 
 end
 end

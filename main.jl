@@ -13,7 +13,7 @@ include("Servers/utils.jl")
 
 # 使用一个函数数组来统一索引所有的算法，避免大量的if else
 const algorithms = Dict(
-    "logistic" => logistic.logitic_run,
+    "logistic" => Logistic.logistic_run,
     "bayes" => bayes.bayes_run,
     "svm" => svm.svm_run
 )
@@ -32,28 +32,23 @@ function handle_request(req)
     if HTTP.method(req) == "OPTIONS"
         return HTTP.Response(204, cors_headers)
 
-    # 处理POST请求
+        # 处理POST请求
     elseif HTTP.method(req) == "POST"
 
         body_str = String(req.body)
         json_data = JSON.parse(body_str)
-        @info keys(json_data)
-
+        @info json_data
         method = json_data["method"]
 
-        file_content = json_data["csvContent"]
-        learning_rate = parse(Float64, json_data["learningRate"])
-
-        # csv文件是否存在 header 行
-        isFirstRowHeader = json_data["isFirstRowHeader"]
-        @info isFirstRowHeader typeof(isFirstRowHeader)
-
         # 将文件内容转换为DataFrame（这里假设内容是CSV格式的）
+        file_content = json_data["csvContent"]
         df = CSV.File(IOBuffer(file_content)) |> DataFrame
 
         # 使用算法进行任务
         if method == "logistic"
-            CA, MAE = algorithms[method](df, learning_rate)
+
+            CA, MAE = algorithms[method](df, ratio=0.7, json_data=json_data)
+
         elseif method == "bayes"
             CA, MAE = algorithms[method](df, learning_rate)
         elseif method == "svm"
@@ -62,7 +57,12 @@ function handle_request(req)
 
         # 将返回的结果返回为json，以便处理
         result = Dict("CA" => CA, "MAE" => MAE)
-        return HTTP.Response(200, JSON.json(result))
+
+        try
+            return HTTP.Response(200, JSON.json(result))
+        catch
+            return HTTP.Response(204, cors_headers)
+        end
 
     else
         # 处理 /*

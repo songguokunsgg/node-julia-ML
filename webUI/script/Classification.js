@@ -57,16 +57,31 @@ async function showLogisticForm() {
     const fileInput = document.getElementById("data-file");
     const file = fileInput.files[0];
     if (file) {
+
       const text = await file.text();
-      const learningRate = document.getElementById("learning-rate").value;
+      const lambda = document.getElementById("lambda").value;
+      const gamma = document.getElementById("gamma").value;
+      const penalty = document.querySelector('input[name="penalty"]:checked').value;
       const isFirstRowHeader = document.getElementById("first-row-is-header").checked;
+      const fit_intercept = document.getElementById("fit_intercept").checked;
+      const penalize_intercept = document.getElementById("penalize_intercept").checked;
+      const scale_penalty_with_samples = document.getElementById("scale_penalty_with_samples").checked;
+      
       const jsonData = JSON.stringify({
         csvContent: text,
-        learningRate: learningRate,
-        method: "logistic",
-        isFirstRowHeader: isFirstRowHeader
+        lambda: lambda,
+        gamma: gamma,
+        penalty: penalty,
+        isFirstRowHeader: isFirstRowHeader,
+        fit_intercept: fit_intercept,
+        penalize_intercept: penalize_intercept,
+        scale_penalty_with_samples: scale_penalty_with_samples,
+        method: "logistic"
       });
+      console.log(jsonData)
+      
       FETCH("logistic", jsonData);
+
     }
   });
 
